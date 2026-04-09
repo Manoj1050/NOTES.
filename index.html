@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWANOJ 💖</title>
+<div class="title">AWANOJ <span class="beat">💖</span></div>
+<div id="anniversary"></div>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  min-height:100vh;
+
+  background: url("love_bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.app{
+display:none;
+padding:20px;
+max-width:750px;
+margin:auto;
+}
+
+.title{
+text-align:center;
+font-size:34px;
+font-weight:bold;
+color:white;
+text-shadow:0 0 10px rgba(255,255,255,0.6),
+            0 0 20px rgba(255,182,193,0.6);
+}
+
+.subtitle{
+text-align:center;
+color:#fff;
+opacity:0.9;
+margin-bottom:20px;
+font-weight:400;
+letter-spacing:0.5px;
+}
+
+.card {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius:16px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.2);
+  color:white;
+  padding:15px;
+  margin-top:15px;
+}
+
+textarea, input {
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  margin-top:8px;
+}
+
+textarea {
+  height:120px;
+}
+
+button{
+border:none;
+border-radius:30px;
+padding:8px 14px;
+cursor:pointer;
+font-weight:500;
+margin-top:10px;
+}
+
+.save {
+  background:#ff4d6d;
+  color:white;
+}
+
+.note{
+transition:0.2s;
+}
+
+.note:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* more styles here... */
+
+.emoji-bar span{
+cursor:pointer;
+font-size:22px;
+margin-right:8px;
+}
+.hearts {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+}
+
+.heart {
+  position: absolute;
+  color: #ff4d6d;
+  font-size: 20px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10vh);
+    opacity: 0;
+  }
+}
+.lock-btn{
+position:fixed;
+top:20px;
+right:20px;
+background:#333;
+color:white;
+padding:8px 14px;
+border-radius:10px;
+border:none;
+cursor:pointer;
+z-index:999;
+}
+
+.change-btn{
+position:fixed;
+top:20px;
+left:20px;
+background:#ff4d6d;
+color:white;
+padding:8px 12px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+z-index:999;
+}
+
+.delete-btn{
+background:#ff4d6d;
+color:white;
+border:none;
+padding:5px 10px;
+border-radius:8px;
+cursor:pointer;
+margin-top:5px;
+}
+
+.edit-btn{
+background:#6c5ce7;
+color:white;
+border:none;
+padding:5px 10px;
+border-radius:8px;
+cursor:pointer;
+margin-right:5px;
+}
+
+#anniversary{
+text-align:center;
+color:white;
+font-size:18px;
+margin-bottom:10px;
+font-weight:500;
+}
+
+.music-btn{
+position:fixed;
+top:60px;
+right:20px;
+background:#ff4d6d;
+color:white;
+border:none;
+padding:8px;
+border-radius:50%;
+cursor:pointer;
+z-index:999;
+}
+
+.dark-btn{
+position:fixed;
+top:100px;
+right:20px;
+background:#333;
+color:white;
+border:none;
+padding:8px;
+border-radius:50%;
+cursor:pointer;
+z-index:999;
+}
+
+.dark-mode{
+background:linear-gradient(135deg,#141414,#2c2c2c);
+color:white;
+}
+
+.dark-mode .card{
+background:#1f1f1f;
+color:white;
+}
+
+.dark-mode textarea,
+.dark-mode input{
+background:#2c2c2c;
+color:white;
+border:1px solid #555;
+}
+
+.like-btn{
+background:#ff7675;
+color:white;
+border:none;
+padding:5px 10px;
+border-radius:8px;
+cursor:pointer;
+margin-right:5px;
+}
+
+.love-line{
+text-align:center;
+color:white;
+font-weight:500;
+margin-top:15px;
+letter-spacing:1px;
+font-size:20px;
+text-shadow:0 2px 6px rgba(0,0,0,0.2);
+}
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(255,182,193,0.35);
+z-index:-1;
+}
+
+body::after{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.25);
+backdrop-filter: blur(2px);
+z-index:-1;
+}
+
+button:hover{
+transform:translateY(-1px);
+box-shadow:0 6px 20px rgba(0,0,0,0.25);
+transition:0.2s;
+}
+.welcome-text{
+text-align:center;
+color:white;
+margin-top:10px;
+font-size:18px;
+opacity:0;
+animation: fadeIn 3s ease forwards;
+}
+
+@keyframes fadeIn{
+0%{
+opacity:0;
+transform:translateY(10px);
+}
+100%{
+opacity:1;
+transform:translateY(0);
+}
+}
+.welcome-text{
+text-shadow:0 0 8px rgba(255,182,193,0.7);
+}
+.beat{
+display:inline-block;
+animation: beat 1.2s infinite;
+}
+
+@keyframes beat{
+0%{ transform:scale(1); }
+25%{ transform:scale(1.2); }
+50%{ transform:scale(1); }
+75%{ transform:scale(1.15); }
+100%{ transform:scale(1); }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="lock-screen" id="lockScreen">
+<h2 class="love-line">Just you, me, and our forever moments ❤️</h2>
+<div class="welcome-text">Welcome to our little world 💖</div>
+
+<input type="password" id="password" placeholder="Enter password">
+<button onclick="unlock()">Enter</button>
+</div>
+
+<div class="app" id="app">
+
+    
+<audio id="bgMusic" loop preload="auto">
+  <source src="main_kahoon.mpeg" type="audio/mpeg">
+</audio>
+<button class="music-btn" onclick="toggleMusic()">🎵</button>
+
+<button class="change-btn" onclick="changePassword()">Change Password 🔑</button>
+
+<button class="lock-btn" onclick="lockApp()">🔒 Lock</button>
+<button class="dark-btn" onclick="toggleDark()">🌙</button>
+
+<div class="subtitle">Where every feeling becomes forever❤️</div>
+
+<div class="card">
+<input id="noteTitle" placeholder="Note title">
+
+<textarea id="noteText" placeholder="Write your feelings..."></textarea>
+
+<div class="emoji-bar">
+<span onclick="addEmoji('❤️')">❤️</span>
+<span onclick="addEmoji('🥺')">🥺</span>
+<span onclick="addEmoji('😍')">😍</span>
+<span onclick="addEmoji('😘')">😘</span>
+<span onclick="addEmoji('💔')">💔</span>
+<span onclick="addEmoji('✨')">✨</span>
+<span onclick="addEmoji('🫶')">🫶</span>
+<span onclick="addEmoji('🌙')">🌙</span>
+</div>
+
+<input type="file" id="imageUpload" accept="image/*,gif">
+
+<button class="save" onclick="saveNote()">Save Memory 💾</button>
+</div>
+
+<div id="notes"></div>
+<div class="hearts"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+
+function unlock() {
+  let input = document.getElementById("password").value;
+
+  db.collection("settings").doc("password").get().then((doc) => {
+
+    // If password not created yet → create it
+    if (!doc.exists) {
+      db.collection("settings").doc("password").set({
+        value: input
+      }).then(() => {
+        alert("Password created 💖");
+        openApp();
+      });
+    } 
+    else {
+      // Check entered password
+      if (input === doc.data().value) {
+        openApp();
+      } else {
+        alert("Wrong password 💔");
+      }
+    }
+
+  });
+}
+
+function openApp(){
+document.getElementById("lockScreen").style.display = "none";
+document.getElementById("app").style.display = "block";
+document.getElementById("bgMusic").play();
+showNotes();
+dailyReminder();
+}
+
+function saveNote(){
+let title = document.getElementById("noteTitle").value;
+let text = document.getElementById("noteText").value;
+let file = document.getElementById("imageUpload").files[0];
+
+if(!text) return;
+
+if(file){
+let reader = new FileReader();
+
+reader.onload = function(e){
+storeNote(title,text,e.target.result);
+}
+
+reader.readAsDataURL(file);
+
+}else{
+storeNote(title,text,null);
+}
+
+}
+
+function storeNote(title,text,img){
+
+db.collection("notes").add({
+title: title,
+text: text,
+img: img,
+date: new Date().toISOString(),
+likes: 0
+});
+
+document.getElementById("noteTitle").value="";
+document.getElementById("noteText").value="";
+document.getElementById("imageUpload").value="";
+}
+
+function showNotes(){
+
+db.collection("notes")
+.orderBy("date","desc")
+.onSnapshot(snapshot => {
+
+let html = "";
+
+snapshot.forEach(doc => {
+let n = doc.data();
+
+html += `
+<div class="card note">
+<b>${n.title || "Untitled"}</b>
+<p>${n.text}</p>
+${n.img ? `<img src="${n.img}" style="width:100%;border-radius:10px;">` : ""}
+<small>${new Date(n.date).toLocaleString()}</small>
+
+<div>
+<button class="like-btn" onclick="likeNote('${doc.id}')">
+❤️ ${n.likes || 0}
+</button>
+
+<button class="edit-btn" onclick="editNote('${doc.id}', \`${n.title || ""}\`, \`${n.text}\`)">✏️ Edit</button>
+<button class="delete-btn" onclick="deleteNote('${doc.id}')">🗑 Delete</button>
+</div>
+
+</div>
+`;
+});
+
+document.getElementById("notes").innerHTML = html;
+
+});
+}
+
+function deleteNote(id){
+if(!confirm("Delete this memory?")) return;
+db.collection("notes").doc(id).delete();
+}
+
+function addEmoji(e){
+document.getElementById("noteText").value += e;
+}
+
+function editNote(id, oldTitle, oldText){
+
+let newTitle = prompt("Edit title", oldTitle);
+if(newTitle === null) return;
+
+let newText = prompt("Edit note", oldText);
+if(newText === null) return;
+
+db.collection("notes").doc(id).update({
+title: newTitle,
+text: newText
+});
+
+}
+
+function updateAnniversary(){
+
+// change this date
+const startDate = new Date("2023-02-14");
+
+const today = new Date();
+const diffTime = today - startDate;
+const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+document.getElementById("anniversary").innerText =
+"Together for " + days + " days 💖";
+
+}
+
+updateAnniversary();
+
+function getPassword(){
+return localStorage.getItem("awanoj_pass");
+}
+function createHeart(){
+const heart = document.createElement("div");
+heart.className = "heart";
+heart.innerHTML = "💖";
+
+heart.style.left = Math.random()*100 + "vw";
+heart.style.animationDuration = (3 + Math.random()*3) + "s";
+
+document.querySelector(".hearts").appendChild(heart);
+
+setTimeout(()=>{ heart.remove(); },6000);
+}
+
+function toggleMusic(){
+  const music = document.getElementById("bgMusic");
+  const btn = document.querySelector(".music-btn");
+
+  if(music.paused){
+    music.play();
+    btn.innerText = "⏸️";
+  } else {
+    music.pause();
+    btn.innerText = "▶️";
+  }
+}
+
+function toggleDark(){
+document.body.classList.toggle("dark-mode");
+
+if(document.body.classList.contains("dark-mode")){
+localStorage.setItem("dark","on");
+}else{
+localStorage.setItem("dark","off");
+}
+}
+function likeNote(id){
+
+const ref = db.collection("notes").doc(id);
+
+ref.get().then(doc=>{
+let current = doc.data().likes || 0;
+
+ref.update({
+likes: current + 1
+});
+});
+}
+
+function dailyReminder(){
+
+const today = new Date().toDateString();
+const lastShown = localStorage.getItem("lastReminder");
+
+if(lastShown === today) return;
+
+const messages = [
+"You are my favorite notification 💖",
+"Don't forget — we are forever ✨",
+"I miss you already 🥺",
+"You + Me = Always ❤️",
+"Our love grows every day 🌹"
+];
+
+const msg = messages[Math.floor(Math.random()*messages.length)];
+
+setTimeout(()=>{
+alert(msg);
+},1500);
+
+localStorage.setItem("lastReminder", today);
+
+}
+
+// load preference
+if(localStorage.getItem("dark") === "on"){
+document.body.classList.add("dark-mode");
+}
+
+setInterval(createHeart, 500);
+
+function lockApp(){
+document.getElementById("app").style.display="none";
+document.getElementById("lockScreen").style.display="flex";
+}
+
+const OWNER_PIN = "1923";
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBFuZ-lAnHXKqZAeSKbAHxmfq714a23V94",
+  authDomain: "awanoj-1ac26.firebaseapp.com",
+  projectId: "awanoj-1ac26",
+  storageBucket: "awanoj-1ac26.firebasestorage.app",
+  messagingSenderId: "18947704608",
+  appId: "1:18947704608:web:e787ec64efd00e79cef945",
+  measurementId: "G-HKKM35JTBD"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+function changePassword(){
+
+  let pin = prompt("Enter owner PIN");
+  if(pin !== OWNER_PIN){
+    alert("Only owner can change password");
+    return;
+  }
+
+  let newPass = prompt("Enter new password");
+  if(!newPass) return;
+
+  db.collection("settings").doc("password").set({
+    value: newPass
+  })
+  .then(() => {
+    alert("Password updated 💖");
+  })
+  .catch((error) => {
+    console.error(error);
+    alert("Error updating password");
+  });
+
+}
+</script>
+</body>
+</html>
