@@ -14,10 +14,15 @@ body {
   font-family: 'Segoe UI', sans-serif;
   min-height:100vh;
 
-  background: url("love_bg.jpg");
+  background-image: url("love_bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+html, body {
+height:100%;
 }
 
 .app{
@@ -311,6 +316,172 @@ animation: beat 1.2s infinite;
 100%{ transform:scale(1); }
 }
 
+.edit-modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.edit-box{
+background:white;
+padding:20px;
+border-radius:12px;
+width:90%;
+max-width:500px;
+}
+
+.edit-box textarea{
+height:150px;
+}
+
+.export-btn{
+position:fixed;
+top:140px;
+right:20px;
+background:#ff4d6d;
+color:white;
+border:none;
+padding:8px;
+border-radius:50%;
+cursor:pointer;
+z-index:999;
+}
+
+.pdf-btn{
+background:#ff8fab;
+color:white;
+border:none;
+padding:5px 10px;
+border-radius:8px;
+cursor:pointer;
+margin-right:5px;
+}
+
+#binNotes{
+max-height:60vh;
+overflow-y:auto;
+margin-top:10px;
+padding-right:5px;
+}
+
+#binModal .edit-box{
+max-height:80vh;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+}
+
+#binModal .edit-box button{
+margin-top:10px;
+}
+
+.date-card{
+background:rgba(255,255,255,0.9);
+border-radius:16px;
+padding:15px;
+margin-top:12px;
+display:flex;
+align-items:center;
+box-shadow:0 8px 25px rgba(0,0,0,0.15);
+position:relative;
+overflow:hidden;
+}
+
+.date-heart{
+font-size:28px;
+margin-right:12px;
+animation:heartbeat 1.5s infinite;
+}
+
+.date-content b{
+font-size:16px;
+}
+
+.countdown{
+font-weight:bold;
+color:#ff4d6d;
+margin-top:5px;
+animation:pulse 2s infinite;
+}
+
+.delete-date{
+position:absolute;
+right:10px;
+top:10px;
+background:#ff4d6d;
+color:white;
+border:none;
+padding:4px 8px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.future{ border-left:5px solid #ff4d6d; }
+.today{ border-left:5px solid #00c853; }
+.past{ border-left:5px solid #999; }
+
+@keyframes heartbeat{
+0%{transform:scale(1)}
+50%{transform:scale(1.2)}
+100%{transform:scale(1)}
+}
+
+@keyframes pulse{
+0%{opacity:1}
+50%{opacity:0.5}
+100%{opacity:1}
+}
+
+#datesList{
+max-height:60vh;
+overflow-y:auto;
+padding-right:5px;
+}
+
+#datesModal .edit-box{
+max-height:80vh;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+}
+
+.logged-user{
+text-align:center;
+color:white;
+font-weight:600;
+margin-bottom:10px;
+font-size:16px;
+}
+
+.manoj{
+color:#74b9ff;
+}
+
+.awantika{
+color:#ff6b81;
+}
+
+.avatar{
+margin-right:6px;
+}
+
+.confetti{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+}
+
+
 </style>
 </head>
 
@@ -336,13 +507,64 @@ animation: beat 1.2s infinite;
 
 <button class="lock-btn" onclick="lockApp()">🔒 Lock</button>
 <button class="dark-btn" onclick="toggleDark()">🌙</button>
+<button id="binBtn" class="bin-btn" onclick="openBin()">🗑 Bin</button>
+<button class="change-btn" style="top:180px" onclick="openDates()">📅 Dates</button>
+<button class="export-btn" onclick="exportPDF()">📄 Export</button>
 
 <div class="subtitle">Where every feeling becomes forever❤️</div>
+<div id="loggedUser" class="logged-user"></div>
 
-<div class="card">
+<div class="card note ${n.author && n.author.toLowerCase()==='manoj' ? 'manoj' : 'awantika'}">
 <input id="noteTitle" placeholder="Note title">
 
 <textarea id="noteText" placeholder="Write your feelings..."></textarea>
+
+<select id="mood">
+<option value="">Select mood</option>
+
+<option>❤️ Happy</option>
+<option>🥺 Miss you</option>
+<option>😍 In love</option>
+<option>😡 Angry</option>
+<option>😴 Sleepy</option>
+<option>🤗 Need hug</option>
+
+<option>💭 Thinking of you</option>
+<option>💔 Sad</option>
+<option>😌 Peaceful</option>
+<option>🔥 Passionate</option>
+<option>😳 Shy</option>
+<option>🥰 Cute mood</option>
+
+<option>😤 Jealous</option>
+<option>🤍 Soft love</option>
+<option>💓 Heart racing</option>
+<option>🌙 Missing you tonight</option>
+<option>☀️ Good morning love</option>
+<option>🌧 Emotional</option>
+
+<option>🎉 Excited</option>
+<option>🫶 Need you</option>
+<option>💞 Romantic</option>
+<option>😢 Crying for you</option>
+<option>😏 Naughty</option>
+<option>🥵 Hot for you</option>
+
+<option>💘 Falling again</option>
+<option>🌹 Special day</option>
+<option>🎶 Thinking with song</option>
+<option>📞 Want to talk</option>
+<option>💌 Writing love</option>
+
+<option>🧠 Overthinking</option>
+<option>😇 Feeling blessed</option>
+<option>💤 Dreaming of you</option>
+<option>🌈 Hopeful</option>
+<option>💎 You’re precious</option>
+
+</select>
+
+<input id="place" placeholder="Written from (e.g., Kharagpur)">
 
 <div class="emoji-bar">
 <span onclick="addEmoji('❤️')">❤️</span>
@@ -357,15 +579,37 @@ animation: beat 1.2s infinite;
 
 <input type="file" id="imageUpload" accept="image/*,gif">
 
+<button onclick="startRecording()">🎙 Record</button>
+<button onclick="stopRecording()">⏹ Stop</button>
+<audio id="voicePreview" controls style="width:100%;margin-top:5px;"></audio>
 <button class="save" onclick="saveNote()">Save Memory 💾</button>
 </div>
 
 <div id="notes"></div>
 <div class="hearts"></div>
+
+<div id="editModal" class="edit-modal">
+<div class="edit-box">
+
+<input id="editTitle" placeholder="Title">
+
+<textarea id="editText"></textarea>
+
+<button onclick="updateNote()">Save ✏️</button>
+<button onclick="closeEdit()">Cancel</button>
+
+<button onclick="restoreNote('${doc.id}')">Restore</button>
+<button onclick="deleteForever('${doc.id}')">Delete</button>
+
+</div>
+</div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
 
@@ -400,7 +644,11 @@ document.getElementById("lockScreen").style.display = "none";
 document.getElementById("app").style.display = "block";
 document.getElementById("bgMusic").play();
 showNotes();
+showLoggedUser();
 dailyReminder();
+nightMessage();
+anniversaryCelebration();
+onThisDay();
 }
 
 function saveNote(){
@@ -408,31 +656,37 @@ let title = document.getElementById("noteTitle").value;
 let text = document.getElementById("noteText").value;
 let file = document.getElementById("imageUpload").files[0];
 
-if(!text) return;
+if(!text && !file) return;
 
 if(file){
 let reader = new FileReader();
 
 reader.onload = function(e){
 storeNote(title,text,e.target.result);
-}
+};
 
 reader.readAsDataURL(file);
 
 }else{
-storeNote(title,text,null);
+storeNote(title,text,"");
 }
-
 }
 
 function storeNote(title,text,img){
 
+let mood = document.getElementById("mood").value;
+let place = document.getElementById("place").value;
+
 db.collection("notes").add({
-title: title,
-text: text,
-img: img,
-date: new Date().toISOString(),
-likes: 0
+title,
+text,
+img,
+voice: voiceBlob ? URL.createObjectURL(voiceBlob) : "",
+mood,
+place,
+author: currentUser,
+date:new Date().toISOString(),
+likes:0
 });
 
 document.getElementById("noteTitle").value="";
@@ -455,7 +709,11 @@ html += `
 <div class="card note">
 <b>${n.title || "Untitled"}</b>
 <p>${n.text}</p>
+<small>by ${n.author || "unknown"}</small>
 ${n.img ? `<img src="${n.img}" style="width:100%;border-radius:10px;">` : ""}
+${n.voice ? `<audio controls src="${n.voice}" style="width:100%"></audio>` : ""}
+${n.mood ? `<div>${n.mood}</div>` : ""}
+${n.place ? `<small>📍 ${n.place}</small>` : ""}
 <small>${new Date(n.date).toLocaleString()}</small>
 
 <div>
@@ -464,6 +722,7 @@ ${n.img ? `<img src="${n.img}" style="width:100%;border-radius:10px;">` : ""}
 </button>
 
 <button class="edit-btn" onclick="editNote('${doc.id}', \`${n.title || ""}\`, \`${n.text}\`)">✏️ Edit</button>
+<button class="pdf-btn" onclick="exportSinglePDF('${doc.id}')">📄 PDF</button>
 <button class="delete-btn" onclick="deleteNote('${doc.id}')">🗑 Delete</button>
 </div>
 
@@ -477,27 +736,130 @@ document.getElementById("notes").innerHTML = html;
 }
 
 function deleteNote(id){
-if(!confirm("Delete this memory?")) return;
+
+db.collection("notes").doc(id).get().then(doc => {
+
+const note = doc.data();
+
+if(note.author === currentUser || currentUser.toLowerCase() === "manoj"){
+
+if(!confirm("Want to delete?")) return;
+
+db.collection("trash").add(note).then(()=>{
 db.collection("notes").doc(id).delete();
+});
+
+}else{
+alert("Only " + note.author + " can delete this note 💖");
+}
+
+});
+
+}
+
+function openBin(){
+  if(currentUser.toLowerCase() !== "manoj") return;
+
+  document.getElementById("binModal").style.display = "flex";
+
+  db.collection("trash")
+  .orderBy("date","desc")
+  .get()
+  .then(snapshot=>{
+    let html = "";
+    snapshot.forEach(doc=>{
+      const n = doc.data();
+      html += `
+      <div class="note">
+        <b>${n.title}</b>
+        <p style="white-space:pre-line">${n.text}</p>
+        <small>by ${n.author}</small>
+        <button onclick="restoreNote('${doc.id}')">Restore</button>
+        <button onclick="deleteForever('${doc.id}')">Delete</button>
+      </div>`;
+    });
+    document.getElementById("binNotes").innerHTML = html;
+  });
+}
+
+function restoreNote(id){
+
+db.collection("trash").doc(id).get().then(doc=>{
+
+let note = doc.data();
+
+db.collection("notes").add(note).then(()=>{
+db.collection("trash").doc(id).delete();
+});
+
+});
+
+}
+
+function deleteForever(id){
+
+if(!confirm("Delete permanently?")) return;
+
+db.collection("trash").doc(id).delete()
+.then(()=>{
+console.log("Deleted permanently");
+})
+.catch(err=>{
+console.error(err);
+alert("Error deleting");
+});
+
+}
+
+function closeBin(){
+  document.getElementById("binModal").style.display="none";
 }
 
 function addEmoji(e){
 document.getElementById("noteText").value += e;
 }
 
-function editNote(id, oldTitle, oldText){
+let editingId = null;
 
-let newTitle = prompt("Edit title", oldTitle);
-if(newTitle === null) return;
+function editNote(id,title,text){
 
-let newText = prompt("Edit note", oldText);
-if(newText === null) return;
+db.collection("notes").doc(id).get().then(doc => {
 
-db.collection("notes").doc(id).update({
-title: newTitle,
-text: newText
+const note = doc.data();
+
+// allow only author OR owner
+if(note.author === currentUser || currentUser.toLowerCase() === "manoj"){
+
+editingId = id;
+
+document.getElementById("editTitle").value = title;
+document.getElementById("editText").value = text;
+
+document.getElementById("editModal").style.display = "flex";
+
+}else{
+alert("Only " + note.author + " can edit this note ✏️");
+}
+
 });
 
+}
+
+function updateNote(){
+
+let title = document.getElementById("editTitle").value;
+let text = document.getElementById("editText").value;
+
+db.collection("notes").doc(editingId).update({
+title: title,
+text: text
+});
+
+closeEdit();
+}
+
+function closeEdit(){
+document.getElementById("editModal").style.display="none";
 }
 
 function updateAnniversary(){
@@ -513,8 +875,127 @@ document.getElementById("anniversary").innerText =
 "Together for " + days + " days 💖";
 
 }
-
 updateAnniversary();
+
+async function exportPDF(){
+
+const { jsPDF } = window.jspdf;
+
+const snapshot = await db.collection("notes")
+.orderBy("date","asc")
+.get();
+
+const container = document.createElement("div");
+container.style.width = "700px";
+container.style.padding = "20px";
+container.style.fontFamily = "Poppins, sans-serif";
+container.style.background = "#fff0f5";
+container.style.color = "#333";
+
+container.innerHTML = `<h1 style="text-align:center;color:#ff4d6d;">AWANOJ Love Diary 💖</h1>`;
+
+snapshot.forEach(docSnap=>{
+const n = docSnap.data();
+
+const noteDiv = document.createElement("div");
+noteDiv.style.marginBottom = "20px";
+noteDiv.style.paddingBottom = "10px";
+noteDiv.style.borderBottom = "1px solid #ddd";
+
+noteDiv.innerHTML = `
+<h3>${n.title || "Memory"}</h3>
+<p><i>by ${n.author}</i></p>
+<p style="white-space:pre-line">${n.text}</p>
+<p style="font-size:12px;color:gray">
+${new Date(n.date).toLocaleString()}
+</p>
+`;
+
+container.appendChild(noteDiv);
+});
+
+document.body.appendChild(container);
+
+const canvas = await html2canvas(container, { scale: 2 });
+const imgData = canvas.toDataURL("image/png");
+
+const pdf = new jsPDF("p","mm","a4");
+
+const imgWidth = 190;
+const pageHeight = 297;
+const imgHeight = canvas.height * imgWidth / canvas.width;
+
+let heightLeft = imgHeight;
+let position = 0;
+
+pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+heightLeft -= pageHeight;
+
+while (heightLeft > 0){
+position = heightLeft - imgHeight;
+pdf.addPage();
+pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+heightLeft -= pageHeight;
+}
+
+pdf.save("AWANOJ_Love_Diary.pdf");
+
+document.body.removeChild(container);
+}
+
+async function exportSinglePDF(id){
+
+const { jsPDF } = window.jspdf;
+
+const snap = await db.collection("notes").doc(id).get();
+const n = snap.data();
+
+// styled container
+const div = document.createElement("div");
+div.style.padding = "30px";
+div.style.width = "650px";
+div.style.fontFamily = "Poppins, sans-serif";
+div.style.background = "#fff0f5";
+div.style.color = "#333";
+
+div.innerHTML = `
+<h2 style="color:#ff4d6d;text-align:center;">AWANOJ 💖</h2>
+<h3>${n.title || "Memory"}</h3>
+<p><i>by ${n.author}</i></p>
+<p style="white-space:pre-line;">${n.text}</p>
+<p style="font-size:12px;color:gray;">
+${new Date(n.date).toLocaleString()}
+</p>
+`;
+
+document.body.appendChild(div);
+
+const canvas = await html2canvas(div, { scale: 2 });
+const imgData = canvas.toDataURL("image/png");
+
+const pdf = new jsPDF("p","mm","a4");
+
+const imgWidth = 190;
+const pageHeight = 297;
+const imgHeight = canvas.height * imgWidth / canvas.width;
+
+let heightLeft = imgHeight;
+let position = 10;
+
+pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+heightLeft -= pageHeight;
+
+while (heightLeft > 0) {
+position = heightLeft - imgHeight + 10;
+pdf.addPage();
+pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+heightLeft -= pageHeight;
+}
+
+pdf.save((n.title || "Love_Note") + ".pdf");
+
+document.body.removeChild(div);
+}
 
 function getPassword(){
 return localStorage.getItem("awanoj_pass");
@@ -579,7 +1060,32 @@ const messages = [
 "Don't forget — we are forever ✨",
 "I miss you already 🥺",
 "You + Me = Always ❤️",
-"Our love grows every day 🌹"
+"Our love grows every day 🌹",
+"You are my happy place 🌸",
+"Every moment with you matters 💞",
+"My day starts with you in mind ☀️",
+"You make my world beautiful 🌍",
+"I fall for you again every day 💘",
+"Your smile is my strength 😊",
+"Together is my favorite place 🫶",
+"You are my calm in chaos 🌊",
+"Just thinking of you makes me smile 💫",
+"You are my forever person 💍",
+"Love you more than yesterday 💕",
+"You are my best decision ❤️",
+"My heart belongs to you 💓",
+"With you, everything feels right ✨",
+"You complete my story 📖",
+"Your love is my favorite feeling 💗",
+"Forever isn’t enough with you ⏳",
+"You are my today and tomorrow 🌷",
+"My soul found its home in you 🏡",
+"I cherish every second with you ⏰",
+"You are my sweetest habit 🍯",
+"Your love makes me stronger 💪",
+"Every heartbeat says your name 💓",
+"You are my dream come true 🌙",
+"My world is brighter with you ☀️"
 ];
 
 const msg = messages[Math.floor(Math.random()*messages.length)];
@@ -605,6 +1111,46 @@ document.getElementById("lockScreen").style.display="flex";
 }
 
 const OWNER_PIN = "1923";
+const OWNER_NAME = "Manoj";
+const PARTNER_NAME = "Awantika";   // change to her name
+
+let currentUser = localStorage.getItem("awanoj_user");
+
+if(!currentUser){
+
+let name = prompt("Enter your name");
+
+if(!name){
+location.reload();
+}
+
+name = name.trim();
+
+if(name.toLowerCase() === OWNER_NAME.toLowerCase()){
+
+let pin = prompt("Enter owner PIN");
+
+if(pin === OWNER_PIN){
+currentUser = OWNER_NAME;
+localStorage.setItem("awanoj_user", currentUser);
+}else{
+alert("Owner PIN required");
+location.reload();
+}
+
+}
+else if(name.toLowerCase() === PARTNER_NAME.toLowerCase()){
+
+currentUser = PARTNER_NAME;
+localStorage.setItem("awanoj_user", currentUser);
+
+}
+else{
+alert("u are not allowed to access this diary 💔");
+location.reload();
+}
+
+}
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -642,6 +1188,279 @@ function changePassword(){
   });
 
 }
+
+window.addEventListener("DOMContentLoaded", () => {
+if(currentUser && currentUser.toLowerCase() === "manoj"){
+let btn = document.getElementById("binBtn");
+if(btn) btn.style.display = "inline-block";
+}
+});
+
+if(currentUser && currentUser.toLowerCase() === "manoj"){
+document.getElementById("binBtn").style.display = "inline-block";
+}
+
+let mediaRecorder;
+let audioChunks = [];
+let voiceBlob = null;
+
+async function startRecording(){
+const stream = await navigator.mediaDevices.getUserMedia({ audio:true });
+
+mediaRecorder = new MediaRecorder(stream);
+
+mediaRecorder.ondataavailable = e=>{
+audioChunks.push(e.data);
+};
+
+mediaRecorder.onstop = ()=>{
+voiceBlob = new Blob(audioChunks,{type:"audio/mp3"});
+audioChunks = [];
+
+const audioURL = URL.createObjectURL(voiceBlob);
+document.getElementById("voicePreview").src = audioURL;
+};
+
+mediaRecorder.start();
+}
+
+function stopRecording(){
+mediaRecorder.stop();
+}
+
+function openDates(){
+document.getElementById("datesModal").style.display="flex";
+loadDates();
+}
+
+function closeDates(){
+document.getElementById("datesModal").style.display="none";
+}
+
+function saveDate(){
+
+let title = document.getElementById("eventTitle").value;
+let date = document.getElementById("eventDate").value;
+
+if(!title || !date) return;
+
+db.collection("dates").add({
+title,
+date
+});
+
+document.getElementById("eventTitle").value="";
+document.getElementById("eventDate").value="";
+}
+
+function loadDates(){
+
+db.collection("dates")
+.orderBy("date","asc")
+.onSnapshot(snapshot=>{
+
+  console.log("Current user:", currentUser);
+let html="";
+
+snapshot.forEach(doc=>{
+let d = doc.data();
+
+let today = new Date();
+let eventDate = new Date(d.date);
+
+let diff = Math.ceil((eventDate - today)/(1000*60*60*24));
+
+let text="";
+let className="";
+
+if(diff > 0){
+text = diff + " days left";
+className="future";
+}else if(diff === 0){
+text = "Today ❤️";
+className="today";
+}else{
+text = Math.abs(diff) + " days ago";
+className="past";
+}
+
+html += `
+<div class="date-card ${className}">
+<div class="date-heart">💖</div>
+
+<div class="date-content">
+<b>${d.title}</b>
+<p>${formatDate(d.date)}</p>
+
+<div class="countdown">${text}</div>
+
+${currentUser && currentUser.trim().toLowerCase() === "manoj" ?  
+`<button class="delete-date" onclick="deleteDate('${doc.id}')">🗑</button>`
+: ""}
+
+</div>
+</div>
+`;
+});
+
+document.getElementById("datesList").innerHTML = html;
+
+});
+}
+
+function formatDate(dateStr){
+
+let d = new Date(dateStr);
+
+let day = String(d.getDate()).padStart(2,'0');
+let month = String(d.getMonth()+1).padStart(2,'0');
+let year = d.getFullYear();
+
+return `${day}-${month}-${year}`;
+}
+
+checkDateReminders();
+
+function checkDateReminders(){
+
+db.collection("dates").get().then(snapshot=>{
+
+let today = new Date().toISOString().split("T")[0];
+
+snapshot.forEach(doc=>{
+let d = doc.data();
+
+if(d.date === today){
+setTimeout(()=>{
+alert("❤️ Today: " + d.title);
+},2000);
+}
+
+});
+
+});
+}
+
+function deleteDate(id){
+
+if(!currentUser || currentUser.trim().toLowerCase() !== "manoj") return;
+
+if(confirm("Delete this special memory? 💔")){
+db.collection("dates").doc(id).delete();
+}
+
+}
+
+function showLoggedUser(){
+
+let el = document.getElementById("loggedUser");
+
+if(!currentUser) return;
+
+if(currentUser.toLowerCase() === "manoj"){
+el.innerHTML = `<span class="manoj"><span class="avatar">💙</span>Manoj</span>`;
+}
+else if(currentUser.toLowerCase() === "awantika"){
+el.innerHTML = `<span class="awantika"><span class="avatar">💗</span>Awantika</span>`;
+}
+
+}
+function nightMessage(){
+
+const hour = new Date().getHours();
+
+if(hour >= 22 || hour <= 5){
+
+const msgs = [
+"Good night my love 🌙",
+"Dream about us tonight 💖",
+"I miss you more at night 🥺",
+"You are my last thought today ✨",
+"Sleep well, my forever ❤️"
+];
+
+const msg = msgs[Math.floor(Math.random()*msgs.length)];
+
+setTimeout(()=>{
+alert(msg);
+},2000);
+
+}
+
+}
+
+function anniversaryCelebration(){
+
+const today = new Date();
+const date = today.getDate();
+const month = today.getMonth()+1;
+
+if(date===14 && month===2){   // your date
+
+for(let i=0;i<50;i++){
+let c = document.createElement("div");
+c.innerHTML="🎉";
+c.style.position="fixed";
+c.style.left=Math.random()*100+"vw";
+c.style.top="-10px";
+c.style.fontSize="20px";
+c.style.animation="float 5s linear";
+document.body.appendChild(c);
+
+setTimeout(()=>c.remove(),5000);
+}
+
+}
+
+}
+
+function onThisDay(){
+
+let today = new Date();
+let day = today.getDate();
+let month = today.getMonth();
+
+db.collection("notes").get().then(snapshot=>{
+
+snapshot.forEach(doc=>{
+let n = doc.data();
+let d = new Date(n.date);
+
+if(d.getDate()===day && d.getMonth()===month){
+setTimeout(()=>{
+alert("On this day ❤️\n" + (n.title || n.text));
+},3000);
+}
+
+});
+
+});
+}
+
+
 </script>
+
+<div id="binModal" class="edit-modal">
+  <div class="edit-box">
+    <h3>Recycle Bin</h3>
+    <div id="binNotes"></div>
+    <button onclick="closeBin()">Close</button>
+  </div>
+</div>
+<div id="datesModal" class="edit-modal">
+<div class="edit-box">
+<h3>Important Dates ❤️</h3>
+
+<input id="eventTitle" placeholder="Event name">
+<input type="date" id="eventDate">
+
+<button onclick="saveDate()">Save</button>
+
+<div id="datesList"></div>
+
+<button onclick="closeDates()">Close</button>
+</div>
+</div>
+
 </body>
 </html>
